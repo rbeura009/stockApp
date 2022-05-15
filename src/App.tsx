@@ -18,9 +18,13 @@ function App() {
       <Route path="/config">
         <ConfigPage />
       </Route>
-      <Route>
-        <h1>This page does not exists</h1>
-      </Route>
+      <Route
+        render={() => (
+          <div className="flex-center">
+            <h1>This is a dead end. This page does not exist.</h1>
+          </div>
+        )}
+      ></Route>
     </div>
   );
 }
