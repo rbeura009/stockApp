@@ -10,7 +10,7 @@ import StockDetails from "./stockDetails";
 const StockDetailsContainer = () => {
   const params = useParams() as { stock: string };
   // const [stock, setStock] = useState("");
-  const [apiData, isLoading, error] = useHttp(
+  const [apiData, isLoading, error]: any = useHttp(
     getCompanyData(params.stock),
     "GET"
   );
@@ -31,7 +31,10 @@ const StockDetailsContainer = () => {
   return (
     <div className="stock-details" style={{ padding: "2rem", height: "100%" }}>
       {isLoading || error ? (
-        <Loader loading={isLoading ? true : false} />
+        <Loader
+          loading={isLoading ? true : false}
+          errorMessage={error ? error : ""}
+        />
       ) : isEmptyObject(stockDetails) ? (
         <NoData symbol={params.stock} />
       ) : (

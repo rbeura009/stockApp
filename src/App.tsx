@@ -18,6 +18,9 @@ function App() {
       <Route path="/config">
         <ConfigPage />
       </Route>
+      <Route>
+        <h1>This page does not exists</h1>
+      </Route>
     </div>
   );
 }

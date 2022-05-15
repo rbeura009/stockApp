@@ -49,7 +49,11 @@ const StockDetails = (props: any) => {
           {stockPriceData && stockPriceData["Global Quote"] && (
             <div>
               <p className={classes["stock-price"]}>
-                {stockPriceData["Global Quote"]["05. price"]}
+                {stockPriceData["Global Quote"]["05. price"]
+                  ? parseFloat(
+                      stockPriceData["Global Quote"]["05. price"]
+                    ).toFixed(2)
+                  : ""}
               </p>
 
               <div
@@ -63,11 +67,19 @@ const StockDetails = (props: any) => {
                   <span className={classes["green-up-arrow"]}></span>
                 )}
                 <span className={classes["stock-price-change"]}>
-                  {stockPriceData["Global Quote"]["09. change"]}
+                  {stockPriceData["Global Quote"]["09. change"]
+                    ? parseFloat(
+                        stockPriceData["Global Quote"]["09. change"]
+                      ).toFixed(2)
+                    : ""}
                 </span>
                 (
                 <span className={classes["stock-price-change-pc"]}>
-                  {stockPriceData["Global Quote"]["10. change percent"]}
+                  {stockPriceData["Global Quote"]["10. change percent"]
+                    ? parseFloat(
+                        stockPriceData["Global Quote"]["10. change percent"]
+                      ).toFixed(2) + "%"
+                    : ""}
                 </span>
                 )
               </div>

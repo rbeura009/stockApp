@@ -5,8 +5,11 @@ import classes from "./stockChart.module.css";
 
 const StockChart = ({ symbol }: { symbol: string }) => {
   //   const [apiData, isLoading, error] = useHttp(getTimeSeriesData(symbol), "GET");
-  //   console.log(apiData);
-  return <div className={classes["stock-chart-container"]}></div>;
+  return (
+    <div className={classes["stock-chart-container"]}>
+      <p>Chart to be displayed here. WIP.</p>
+    </div>
+  );
 };
 
 export default React.memo(StockChart);
