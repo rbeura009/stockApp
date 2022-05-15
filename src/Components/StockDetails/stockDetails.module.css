@@ -1,0 +1,94 @@
+.name-container {
+  border-bottom: 8px solid green;
+  padding: 0.5rem 0;
+}
+
+.name-container .sector-text {
+  font-size: 0.8em;
+}
+
+.price-chart-container {
+  height: 20rem;
+  border-bottom: 6px solid grey;
+  padding: 0.5rem;
+  display: flex;
+  width: 100%;
+}
+
+.price-chart-container .price-container {
+  width: 40%;
+}
+
+.price-chart-container .price-container .stock-price {
+  font-size: 3rem;
+}
+
+.price-chart-container .price-container .stock-price-change-container {
+  font-size: 2rem;
+  display: flex;
+  align-items: center;
+}
+
+.stock-details-data-container {
+  margin: 1rem 0 3rem;
+  display: flex;
+  gap: 5rem;
+}
+.stock-details-data-container div {
+  flex: 1;
+}
+.stock-details-data-container .details-row-item {
+  display: flex;
+  border-bottom: 1px dotted grey;
+}
+
+.stock-details-data-container .details-row-item div {
+  flex: 1;
+}
+.description {
+  margin-top: 0.8rem;
+}
+
+.red-down-arrow {
+  border-top: 10px solid #d95858;
+  margin-right: 5px;
+  vertical-align: middle;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  display: inline-block;
+}
+
+.green-up-arrow {
+  border-bottom: 10px solid #39a97c;
+  margin-right: 5px;
+  vertical-align: middle;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  display: inline-block;
+}
+
+.red {
+  color: red;
+}
+
+.green {
+  color: green;
+}
+
+.title {
+  font-weight: 600;
+}
+
+@media screen and (max-width: 768px) {
+  .stock-details-data-container {
+    flex-direction: column;
+    gap: 2rem;
+  }
+  .price-chart-container {
+    flex-direction: column;
+  }
+  .price-chart-container .price-container {
+    width: 100%;
+    min-height: 6rem;
+  }
+}

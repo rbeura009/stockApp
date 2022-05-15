@@ -1,0 +1,27 @@
+.home-container {
+  width: 100%;
+  display: flex;
+  height: calc(100vh - 5rem);
+}
+
+.home-container .stock-input-container {
+  width: 25%;
+  background-color: #f9f9f9;
+  position: relative;
+}
+.home-container .stock-details-container {
+  width: 75%;
+  height: 100%;
+}
+
+@media screen and (max-width: 768px) {
+  .home-container {
+    flex-direction: column;
+  }
+  .home-container .stock-input-container {
+    width: 100%;
+  }
+  .home-container .stock-details-container {
+    width: 100%;
+  }
+}
