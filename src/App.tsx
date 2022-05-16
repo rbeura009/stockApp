@@ -1,5 +1,5 @@
 import React from "react";
-import { Route } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import "./App.css";
 import Header from "./Components/Header";
 import ConfigPage from "./Pages/config";
@@ -9,22 +9,24 @@ function App() {
   return (
     <div className="App" data-testid="App">
       <Header />
-      <Route path="/" exact>
-        <HomePage />
-      </Route>
-      <Route path="/stock/:stock">
-        <HomePage />
-      </Route>
-      <Route path="/config">
-        <ConfigPage />
-      </Route>
-      <Route
-        render={() => (
-          <div className="flex-center">
-            <h1>This is a dead end. This page does not exist.</h1>
-          </div>
-        )}
-      ></Route>
+      <Switch>
+        <Route path="/" exact>
+          <HomePage />
+        </Route>
+        <Route path="/stock/:stock">
+          <HomePage />
+        </Route>
+        <Route path="/config">
+          <ConfigPage />
+        </Route>
+        <Route
+          render={() => (
+            <div className="flex-center">
+              <h1>This is a dead end. This page does not exist.</h1>
+            </div>
+          )}
+        ></Route>
+      </Switch>
     </div>
   );
 }

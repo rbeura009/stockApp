@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { appContext } from "../../Context/appContext";
+import useHttp from "../../CustomHooks/useHttp";
 import { getPriceInfo } from "../../Service/stock";
 import StockChart from "../StockChart/stockChart";
 import classes from "./stockDetails.module.css";
@@ -7,22 +8,39 @@ import classes from "./stockDetails.module.css";
 const StockDetails = (props: any) => {
   const [stockPriceData, setStockPriceData] = useState(null);
   let isNagative = false;
+  const { isLoading, error, sendRequest }: any = useHttp();
   const ctx = useContext(appContext);
 
   useEffect(() => {
-    // let interval = setInterval(() => {
-    getData(props.details?.Symbol);
-    /*   }, ctx.stockPriceRefreshInterval);
+    if (props.details?.Symbol) {
+      sendRequest(
+        getPriceInfo(props.details?.Symbol),
+        "GET",
+        null,
+        (data: any) => {
+          setStockPriceData(data);
+        }
+      );
+    }
+  }, [props.details?.Symbol, sendRequest]);
+
+  useEffect(() => {
+    let interval = setInterval(() => {
+      if (props.details?.Symbol) {
+        sendRequest(
+          getPriceInfo(props.details?.Symbol),
+          "GET",
+          null,
+          (data: any) => {
+            setStockPriceData(data);
+          }
+        );
+      }
+    }, ctx.stockPriceRefreshInterval);
     return () => {
       clearInterval(interval);
-    }; */
-  }, [props.details?.Symbol]);
-
-  const getData = (symbol: string) => {
-    getPriceInfo(symbol).then((data) => {
-      setStockPriceData(data);
-    });
-  };
+    };
+  }, [props.details?.Symbol, sendRequest, ctx.stockPriceRefreshInterval]);
 
   if (
     stockPriceData &&

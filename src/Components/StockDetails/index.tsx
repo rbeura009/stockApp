@@ -9,24 +9,16 @@ import StockDetails from "./stockDetails";
 
 const StockDetailsContainer = () => {
   const params = useParams() as { stock: string };
-  // const [stock, setStock] = useState("");
-  const [apiData, isLoading, error]: any = useHttp(
-    getCompanyData(params.stock),
-    "GET"
-  );
-  let stockDetails = apiData;
-  /*  useEffect(() => {
-    if (params.stock !== stock) {
-      setStock(params.stock);
-      getStockDetails(params.stock);
-    }
-  }, [params.stock, stock]);
+  const [stockDetails, setStockDetails] = useState(null);
+  const { isLoading, error, sendRequest }: any = useHttp();
 
-  const getStockDetails = (symbol: string) => {
-    getCompanyData(symbol).then((details) => {
-      setStockDetails(details);
-    });
-  }; */
+  useEffect(() => {
+    if (params.stock) {
+      sendRequest(getCompanyData(params.stock), "GET", null, (data: any) => {
+        setStockDetails(data);
+      });
+    }
+  }, [params.stock, sendRequest]);
 
   return (
     <div className="stock-details" style={{ padding: "2rem", height: "100%" }}>

@@ -6,7 +6,7 @@ export const appContext = React.createContext({
 
 const AppContextProvider = (props) => {
   const [stockPriceRefreshInterval, setStockPriceRefreshInterval] =
-    useState(20000);
+    useState(200000);
   return (
     <appContext.Provider
       value={{

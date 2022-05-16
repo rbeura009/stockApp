@@ -1,16 +1,16 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useState } from "react";
 
 const config = {};
 
-const useHttp = (URL, method = "GET", body) => {
+const useHttp = () => {
   const [isLoading, setIsloading] = useState(false);
   const [error, setError] = useState("");
-  const [apiData, setApiData] = useState(null);
 
-  config.method = method;
+  const sendRequest = useCallback((URL, method = "GET", body, applyData) => {
+    setIsloading(false);
+    setError("");
 
-  useEffect(() => {
-    setIsloading(true);
+    config.method = method;
 
     fetch(URL, config)
       .then((data) => data.json())
@@ -18,18 +18,17 @@ const useHttp = (URL, method = "GET", body) => {
         if (data["Error Message"] || data["note"]) {
           throw new Error(data["Error Message"] || data["note"]);
         } else {
-          setApiData(data);
+          applyData(data);
         }
-
         setIsloading(false);
       })
       .catch((error) => {
         setError(error.message || error);
         setIsloading(false);
       });
-  }, [URL, method]);
+  }, []);
 
-  return [apiData, isLoading, error];
+  return { isLoading, error, sendRequest };
 };
 
 export default useHttp;

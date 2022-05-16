@@ -13,5 +13,6 @@ export function getTimeSeriesData(symbol: string) {
 }
 export function getPriceInfo(symbol: string) {
   const URL = `${baseUrl}?function=GLOBAL_QUOTE&symbol=${symbol}&apikey=${process.env.API_KEY}`;
-  return fetch(URL).then((data) => data.json());
+  // return fetch(URL).then((data) => data.json());
+  return URL;
 }
