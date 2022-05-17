@@ -1,10 +1,10 @@
 import React from "react";
 import { Route } from "react-router-dom";
-import AutoCompleteList from "../Components/AutoCompleteList";
-import StockDetails from "../Components/StockDetails";
-import StockInput from "../Components/StockInput";
-import Welcome from "../Components/Welcome";
-import AutoCompleteContextProvider from "../Context/autoComplete.context";
+import AutoCompleteList from "../../Components/AutoCompleteList";
+import StockDetails from "../../Components/StockDetails";
+import StockInput from "../../Components/StockInput";
+import Welcome from "../../Components/Welcome";
+import AutoCompleteContextProvider from "../../Context/autoComplete.context";
 import classes from "./HomePage.module.css";
 
 const HomePage = () => {

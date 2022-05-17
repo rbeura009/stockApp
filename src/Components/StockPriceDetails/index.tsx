@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { appContext } from "../../Context/appContext";
 import useHttp from "../../CustomHooks/useHttp";
 import { getPriceInfo } from "../../Service/stock";
+import Loader from "../../UI-Components/Loader/loading";
 import StockChart from "../StockChart/stockChart";
 import classes from "./stockDetails.module.css";
 
@@ -13,6 +14,8 @@ const StockDetails = (props: any) => {
 
   useEffect(() => {
     if (props.details?.Symbol) {
+      setStockPriceData(null);
+
       sendRequest(
         getPriceInfo(props.details?.Symbol),
         "GET",
@@ -103,6 +106,8 @@ const StockDetails = (props: any) => {
               </div>
             </div>
           )}
+          {isLoading && <Loader loading={true} errorMessage="" />}
+          {error && <Loader loading={false} errorMessage={error} />}
         </div>
 
         <StockChart symbol={props.details?.Symbol} />

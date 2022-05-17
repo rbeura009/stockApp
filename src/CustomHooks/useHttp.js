@@ -7,7 +7,7 @@ const useHttp = () => {
   const [error, setError] = useState("");
 
   const sendRequest = useCallback((URL, method = "GET", body, applyData) => {
-    setIsloading(false);
+    setIsloading(true);
     setError("");
 
     config.method = method;
@@ -15,8 +15,8 @@ const useHttp = () => {
     fetch(URL, config)
       .then((data) => data.json())
       .then((data) => {
-        if (data["Error Message"] || data["note"]) {
-          throw new Error(data["Error Message"] || data["note"]);
+        if (data["Error Message"] || data["Note"]) {
+          throw new Error(data["Error Message"] || data["Note"]);
         } else {
           applyData(data);
         }

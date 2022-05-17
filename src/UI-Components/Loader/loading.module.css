@@ -1,0 +1,25 @@
+.loader {
+  height: 100%;
+  width: 100%;
+  background-color: #f9f9f9;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 3rem;
+  color: tomato;
+  z-index: 10000;
+  padding: 2rem;
+}
+
+.error-message {
+  height: 100%;
+  width: 100%;
+  background-color: #f9f9f9;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1rem;
+  color: red;
+  z-index: 10000;
+  padding: 2rem;
+}

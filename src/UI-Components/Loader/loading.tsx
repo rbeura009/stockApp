@@ -9,8 +9,13 @@ const Loader = ({
 }) => {
   return (
     <div className={classes["loader"]}>
-      {loading && "Loading..."}
-      {!loading && errorMessage && errorMessage}
+      {loading ? (
+        "Loading..."
+      ) : (
+        <p className={classes["error-message"]}>
+          {errorMessage || "Uh Oh!! An Unknown Error occurred"}
+        </p>
+      )}
     </div>
   );
 };

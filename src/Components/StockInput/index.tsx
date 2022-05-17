@@ -5,7 +5,7 @@ import React, {
 } from "react";
 import classes from "./StockInput.module.css";
 import { useHistory } from "react-router-dom";
-import Input from "../../UI-Components/input";
+import Input from "../../UI-Components/Input/input";
 import { AutoCompleteContext } from "../../Context/autoComplete.context";
 
 const StockInput = () => {

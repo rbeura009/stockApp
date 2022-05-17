@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import useHttp from "../../CustomHooks/useHttp";
 import { getCompanyData } from "../../Service/stock";
-import Loader from "../../UI-Components/loading";
+import Loader from "../../UI-Components/Loader/loading";
 import { isEmptyObject } from "../../Utils/commonUtils";
 import NoData from "../NoDataFound";
-import StockDetails from "./stockDetails";
+import StockDetails from "../StockPriceDetails";
 
 const StockDetailsContainer = () => {
   const params = useParams() as { stock: string };
