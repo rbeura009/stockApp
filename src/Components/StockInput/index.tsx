@@ -7,6 +7,7 @@ import classes from "./StockInput.module.css";
 import { useHistory } from "react-router-dom";
 import Input from "../../UI-Components/Input/input";
 import { AutoCompleteContext } from "../../Context/autoComplete.context";
+import SearchIcon from "../../Assets/Icons/search.svg";
 
 const StockInput = () => {
   const history = useHistory();
@@ -34,7 +35,9 @@ const StockInput = () => {
       className={classes["stock-input-container"]}
       data-testid="stock-input-container"
     >
-      <span className={classes["search-icon"]} onClick={searchHandler}></span>
+      <span className={classes["search-icon"]} onClick={searchHandler}>
+        <img src={SearchIcon} alt="search-icon" />
+      </span>
       <Input
         inputValue={ctx.inputValue}
         data-testid="stock-input"

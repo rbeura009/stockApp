@@ -18,10 +18,7 @@
 }
 
 .stock-input-container .search-icon {
-}
-.stock-input-container .search-icon::before {
   position: absolute;
-  content: "\e8ae";
   font-style: normal;
   font-weight: 400;
   display: inline-block;
@@ -36,4 +33,10 @@
   top: 48%;
   left: 10px;
   transform: translateY(-50%);
+}
+
+.stock-input-container .search-icon img {
+  height: 100%;
+  width: 100%;
+  cursor: pointer;
 }

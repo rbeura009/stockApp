@@ -2,124 +2,127 @@ import React, { useEffect, useState } from "react";
 import useHttp from "../../CustomHooks/useHttp";
 import { getTimeSeriesData } from "../../Service/stock";
 import classes from "./stockChart.module.css";
+import "./stockChart.css";
 
-// import Highcharts from "highcharts";
-// import HighchartsReact from "highcharts-react-official";
+import Highcharts from "highcharts";
+import HighchartsReact from "highcharts-react-official";
+import Loader from "../../UI-Components/Loader/loading";
 
+let TimeInit: any[] = [],
+  PriceInit: any[] = [];
 const StockChart = ({ symbol }: { symbol: string }) => {
-  // const [timeSeriesData, setTimeSeriesData] = useState(null);
-  // const { isLoading, error, sendRequest }: any = useHttp();
-  // let ohlc: any[] = [],
-  //   volume: any[] = [];
+  const [timeSeriesData, setTimeSeriesData] = useState(null);
+  const [Time, setTime] = useState(TimeInit);
+  const [Price, setPrice] = useState(PriceInit);
+  const { isLoading, error, sendRequest }: any = useHttp();
 
-  // useEffect(() => {
-  //   if (symbol) {
-  //     sendRequest(getTimeSeriesData(symbol), "GET", null, (data: any) => {
-  //       Object.keys(data["Time Series (5min)"]).forEach((key) => {
-  //         ohlc.push([
-  //           key, // the date
-  //           data["Time Series (5min)"]["1. open"], // open
-  //           data["Time Series (5min)"]["2. high"], // high
-  //           data["Time Series (5min)"]["3. low"], // low
-  //           data["Time Series (5min)"]["4. close"], // close
-  //         ]);
-  //         volume.push([
-  //           key, // the date
-  //           data["Time Series (5min)"]["5. volume"], // the volume
-  //         ]);
-  //       });
-  //       setTimeSeriesData(data);
-  //     });
-  //   }
-  // }, [symbol, sendRequest]);
+  useEffect(() => {
+    if (symbol) {
+      sendRequest(getTimeSeriesData(symbol), "GET", null, (data: any) => {
+        let Time: any[] = [],
+          Price: any[] = [];
+        Object.keys(data["Time Series (5min)"]).forEach((key: string) => {
+          Price.push(
+            // key, // the date
+            +data["Time Series (5min)"][key]["1. open"] // open
+            // data["Time Series (5min)"]["2. high"], // high
+            // data["Time Series (5min)"]["3. low"], // low
+            // data["Time Series (5min)"]["4. close"], // close
+          );
+          Time.push(
+            key // the date
+            // data["Time Series (5min)"]["5. volume"], // the volume
+          );
+        });
+        setTime(Time);
+        setPrice(Price);
+        setTimeSeriesData(data);
+      });
+    }
+  }, [symbol, sendRequest]);
 
-  // const options = {
-  //   yAxis: [
-  //     {
-  //       labels: {
-  //         align: "left",
-  //       },
-  //       height: "80%",
-  //       resize: {
-  //         enabled: true,
-  //       },
-  //     },
-  //     {
-  //       labels: {
-  //         align: "left",
-  //       },
-  //       top: "80%",
-  //       height: "20%",
-  //       offset: 0,
-  //     },
-  //   ],
-  //   tooltip: {
-  //     shape: "square",
-  //     headerShape: "callout",
-  //     borderWidth: 0,
-  //     shadow: false,
-  //     // positioner: function (width, height, point) {
-  //     //     var chart = this.chart,
-  //     //         position;
+  const options = {
+    title: {
+      text: timeSeriesData
+        ? `${timeSeriesData["Meta Data"]["2. Symbol"]} (${timeSeriesData["Meta Data"]["4. Interval"]})`
+        : "",
+    },
 
-  //     //     if (point.isHeader) {
-  //     //         position = {
-  //     //             x: Math.max(
-  //     //                 // Left side limit
-  //     //                 chart.plotLeft,
-  //     //                 Math.min(
-  //     //                     point.plotX + chart.plotLeft - width / 2,
-  //     //                     // Right side limit
-  //     //                     chart.chartWidth - width - chart.marginRight
-  //     //                 )
-  //     //             ),
-  //     //             y: point.plotY
-  //     //         };
-  //     //     } else {
-  //     //         position = {
-  //     //             x: point.series.chart.plotLeft,
-  //     //             y: point.series.yAxis.top - chart.plotTop
-  //     //         };
-  //     //     }
+    subtitle: {
+      text: timeSeriesData
+        ? `Last Refreshed : ${timeSeriesData["Meta Data"]["3. Last Refreshed"]}`
+        : "",
+    },
 
-  //     //     return position;
-  //     // }
-  //   },
-  //   series: [
-  //     {
-  //       type: "ohlc",
-  //       id: "aapl-ohlc",
-  //       name: "AAPL Stock Price",
-  //       data: ohlc,
-  //     },
-  //     {
-  //       type: "column",
-  //       id: "aapl-volume",
-  //       name: "AAPL Volume",
-  //       data: volume,
-  //       yAxis: 1,
-  //     },
-  //   ],
-  //   responsive: {
-  //     rules: [
-  //       {
-  //         condition: {
-  //           maxWidth: 800,
-  //         },
-  //         chartOptions: {
-  //           rangeSelector: {
-  //             inputEnabled: false,
-  //           },
-  //         },
-  //       },
-  //     ],
-  //   },
-  // };
+    yAxis: {
+      title: {
+        text: "Price",
+      },
+    },
+
+    xAxis: {
+      title: {
+        text: "Time",
+      },
+    },
+
+    legend: {
+      layout: "vertical",
+      align: "right",
+      verticalAlign: "middle",
+    },
+
+    plotOptions: {
+      series: {
+        label: {
+          connectorAllowed: false,
+        },
+        data: Time,
+      },
+    },
+
+    series: [
+      {
+        name: timeSeriesData
+          ? `${timeSeriesData["Meta Data"]["2. Symbol"]}`
+          : "Stock",
+        data: Price,
+      },
+    ],
+
+    responsive: {
+      rules: [
+        {
+          condition: {
+            maxWidth: 768,
+          },
+          chartOptions: {
+            legend: {
+              enabled: false,
+              layout: "horizontal",
+              align: "center",
+              verticalAlign: "bottom",
+            },
+          },
+        },
+      ],
+    },
+  };
 
   return (
     <div className={classes["stock-chart-container"]}>
-      <p>Chart to be displayed here. WIP.</p>
-      {/* <HighchartsReact highcharts={Highcharts} options={options} /> */}
+      {isLoading || error ? (
+        <Loader
+          loading={isLoading ? true : false}
+          errorMessage={error ? error : ""}
+        />
+      ) : (
+        <HighchartsReact
+          highcharts={Highcharts}
+          options={options}
+          style={{ innerHeight: "100%", innerWidth: "100%" }}
+        />
+      )}
     </div>
   );
 };

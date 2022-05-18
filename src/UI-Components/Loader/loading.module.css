@@ -9,6 +9,7 @@
   color: tomato;
   z-index: 10000;
   padding: 2rem;
+  overflow: hidden;
 }
 
 .error-message {
@@ -22,4 +23,10 @@
   color: red;
   z-index: 10000;
   padding: 2rem;
+}
+
+@media screen and (max-width: 768px) {
+  .error-message {
+    font-size: 10px;
+  }
 }

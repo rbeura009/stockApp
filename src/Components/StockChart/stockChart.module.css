@@ -1,9 +1,13 @@
 .stock-chart-container {
-  border: 1px solid tomato;
   width: 60%;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.stock-chart-container > div {
+  height: 100% !important;
+  width: 100% !important;
 }
 
 @media screen and (max-width: 768px) {
