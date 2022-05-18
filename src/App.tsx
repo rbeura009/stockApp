@@ -2,6 +2,7 @@ import React, { Suspense } from "react";
 import { Route, Switch } from "react-router-dom";
 import "./App.css";
 import Header from "./Components/Header";
+import ErrorBoundary from "./ErrorBoundry";
 import NotFoundPage from "./Pages/404/not-found-page";
 
 import HomePage from "./Pages/Home/HomePage";
@@ -18,38 +19,40 @@ const ConfigPage = React.lazy(
 function App() {
   return (
     <div className="App" data-testid="App">
-      <Header />
-      <Switch>
-        <Route path="/" exact>
-          <HomePage />
-        </Route>
-        <Route path="/stock/:stock">
-          <HomePage />
-        </Route>
-        <Route path="/config">
-          <Suspense fallback={<Loader loading={true} errorMessage="" />}>
-            <ConfigPage />
-          </Suspense>
-        </Route>
-        <Route path="/news">
-          <Suspense fallback={<Loader loading={true} errorMessage="" />}>
-            <NewsPage />
-          </Suspense>
-        </Route>
-        <Route path="/aboutus">
-          <Suspense fallback={<Loader loading={true} errorMessage="" />}>
-            <AboutUsPage />
-          </Suspense>
-        </Route>
-        <Route path="/contactus">
-          <Suspense fallback={<Loader loading={true} errorMessage="" />}>
-            <ContactUsPage />
-          </Suspense>
-        </Route>
-        <Route>
-          <NotFoundPage />
-        </Route>
-      </Switch>
+      <ErrorBoundary>
+        <Header />
+        <Switch>
+          <Route path="/" exact>
+            <HomePage />
+          </Route>
+          <Route path="/stock/:stock">
+            <HomePage />
+          </Route>
+          <Route path="/config">
+            <Suspense fallback={<Loader loading={true} errorMessage="" />}>
+              <ConfigPage />
+            </Suspense>
+          </Route>
+          <Route path="/news">
+            <Suspense fallback={<Loader loading={true} errorMessage="" />}>
+              <NewsPage />
+            </Suspense>
+          </Route>
+          <Route path="/aboutus">
+            <Suspense fallback={<Loader loading={true} errorMessage="" />}>
+              <AboutUsPage />
+            </Suspense>
+          </Route>
+          <Route path="/contactus">
+            <Suspense fallback={<Loader loading={true} errorMessage="" />}>
+              <ContactUsPage />
+            </Suspense>
+          </Route>
+          <Route>
+            <NotFoundPage />
+          </Route>
+        </Switch>
+      </ErrorBoundary>
     </div>
   );
 }

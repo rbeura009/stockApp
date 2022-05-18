@@ -25,9 +25,11 @@ const StockInput = () => {
   };
 
   const searchHandler = () => {
-    history.push(`/stock/${ctx.inputValue}`);
-    ctx.setInput("");
-    ctx.setAutoCompleteList([]);
+    if (ctx.inputValue) {
+      history.push(`/stock/${ctx.inputValue}`);
+      ctx.setInput("");
+      ctx.setAutoCompleteList([]);
+    }
   };
 
   return (

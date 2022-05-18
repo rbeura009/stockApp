@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import useHttp from "../../CustomHooks/useHttp";
 import { getTimeSeriesData } from "../../Service/stock";
 import classes from "./stockChart.module.css";
@@ -22,17 +22,8 @@ const StockChart = ({ symbol }: { symbol: string }) => {
         let Time: any[] = [],
           Price: any[] = [];
         Object.keys(data["Time Series (5min)"]).forEach((key: string) => {
-          Price.push(
-            // key, // the date
-            +data["Time Series (5min)"][key]["1. open"] // open
-            // data["Time Series (5min)"]["2. high"], // high
-            // data["Time Series (5min)"]["3. low"], // low
-            // data["Time Series (5min)"]["4. close"], // close
-          );
-          Time.push(
-            key // the date
-            // data["Time Series (5min)"]["5. volume"], // the volume
-          );
+          Price.push(+data["Time Series (5min)"][key]["1. open"]);
+          Time.push(key);
         });
         setTime(Time);
         setPrice(Price);
@@ -41,73 +32,76 @@ const StockChart = ({ symbol }: { symbol: string }) => {
     }
   }, [symbol, sendRequest]);
 
-  const options = {
-    title: {
-      text: timeSeriesData
-        ? `${timeSeriesData["Meta Data"]["2. Symbol"]} (${timeSeriesData["Meta Data"]["4. Interval"]})`
-        : "",
-    },
-
-    subtitle: {
-      text: timeSeriesData
-        ? `Last Refreshed : ${timeSeriesData["Meta Data"]["3. Last Refreshed"]}`
-        : "",
-    },
-
-    yAxis: {
+  const options = useMemo(
+    () => ({
       title: {
-        text: "Price",
+        text: timeSeriesData
+          ? `${timeSeriesData["Meta Data"]["2. Symbol"]} (${timeSeriesData["Meta Data"]["4. Interval"]})`
+          : "",
       },
-    },
 
-    xAxis: {
-      title: {
-        text: "Time",
+      subtitle: {
+        text: timeSeriesData
+          ? `Last Refreshed : ${timeSeriesData["Meta Data"]["3. Last Refreshed"]}`
+          : "",
       },
-    },
 
-    legend: {
-      layout: "vertical",
-      align: "right",
-      verticalAlign: "middle",
-    },
-
-    plotOptions: {
-      series: {
-        label: {
-          connectorAllowed: false,
+      yAxis: {
+        title: {
+          text: "Price",
         },
-        data: Time,
       },
-    },
 
-    series: [
-      {
-        name: timeSeriesData
-          ? `${timeSeriesData["Meta Data"]["2. Symbol"]}`
-          : "Stock",
-        data: Price,
+      xAxis: {
+        title: {
+          text: "Time",
+        },
       },
-    ],
 
-    responsive: {
-      rules: [
+      legend: {
+        layout: "vertical",
+        align: "right",
+        verticalAlign: "middle",
+      },
+
+      plotOptions: {
+        series: {
+          label: {
+            connectorAllowed: false,
+          },
+          data: Time,
+        },
+      },
+
+      series: [
         {
-          condition: {
-            maxWidth: 768,
-          },
-          chartOptions: {
-            legend: {
-              enabled: false,
-              layout: "horizontal",
-              align: "center",
-              verticalAlign: "bottom",
-            },
-          },
+          name: timeSeriesData
+            ? `${timeSeriesData["Meta Data"]["2. Symbol"]}`
+            : "Stock",
+          data: Price,
         },
       ],
-    },
-  };
+
+      responsive: {
+        rules: [
+          {
+            condition: {
+              maxWidth: 768,
+            },
+            chartOptions: {
+              legend: {
+                enabled: false,
+                layout: "horizontal",
+                align: "center",
+                verticalAlign: "bottom",
+              },
+            },
+          },
+        ],
+      },
+    }),
+    [Price, Time, timeSeriesData]
+  );
 
   return (
     <div className={classes["stock-chart-container"]}>

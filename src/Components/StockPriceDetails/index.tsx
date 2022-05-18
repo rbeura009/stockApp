@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { appContext } from "../../Context/appContext";
+import { appContext } from "../../Context/app.context";
 import useHttp from "../../CustomHooks/useHttp";
 import { getPriceInfo } from "../../Service/stock";
 import Loader from "../../UI-Components/Loader/loading";

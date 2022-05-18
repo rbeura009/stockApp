@@ -1,5 +1,7 @@
 import React, { useContext, useRef } from "react";
-import { appContext } from "../../Context/appContext";
+import { appContext } from "../../Context/app.context";
+import Button from "../../UI-Components/Button";
+import classes from "./config-page.module.css";
 
 const ConfigPage = () => {
   const ctx: any = useContext(appContext);
@@ -13,17 +15,19 @@ const ConfigPage = () => {
   return (
     <div className="page">
       <h1>Configuration</h1>
-      <section>
-        <div className="">
-          <label htmlFor="refresh-interval">
-            Specify stock refresh interval
+      <section className={classes["config-section"]}>
+        <div className={classes["config-section-row"]}>
+          <label htmlFor="refresh-interval-config">
+            Specify stock refresh interval:
           </label>
-          <input id="refresh-interval" ref={inputRef} />
+          <input id="refresh-interval-config" ref={inputRef} />
         </div>
       </section>
 
       <div>
-        <button onClick={saveRefreshInterval}>Save</button>
+        <Button variant="primary" onClick={saveRefreshInterval}>
+          Save
+        </Button>
       </div>
     </div>
   );
